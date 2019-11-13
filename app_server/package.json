@@ -1,0 +1,45 @@
+{
+  "name": "mapnik_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "cdev": "nodemon capp.js",
+    "debug": "nodemon inspect app.js"
+  },
+  "dependencies": {
+    "@c_kai/parameter": "^1.0.4",
+    "@koa/router": "^8.0.2",
+    "@mapbox/sphericalmercator": "^1.1.0",
+    "assert": "^2.0.0",
+    "crypto-js": "^3.1.9-1",
+    "glob": "^7.1.4",
+    "graphql": "^14.5.8",
+    "i": "^0.3.6",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-combine-routers": "^4.0.2",
+    "koa-compose": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "log4js": "^5.1.0",
+    "mapnik": "4.3.1",
+    "npm": "^6.11.3",
+    "pg": "^7.12.1",
+    "qs": "^6.9.1",
+    "require-directory": "^2.1.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": "2500"
+  }
+}
