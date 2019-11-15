@@ -47,6 +47,9 @@ const user = {
     },
     shell(){
         return axios.get(`http://localhost:3000/shell?data=ls`);
+    },
+    info(){
+        return axios.get(`http://localhost:3000/user/info`);
     }
 }
 

@@ -1,11 +1,11 @@
 <template>
-    <div class="sign-container">
+    <div class="sign-container base-shadow">
         <form>
             <error-tip :tip="userNameTip" />
             <el-input v-model.trim="userName" placeholder="账号" clearable></el-input>
 
             <error-tip :tip="userPasswordTip" />
-            <el-input v-model.trim="userPassword" placeholder="密码" show-password clearable>
+            <el-input v-model.trim="userPassword" placeholder="密码" show-password clearable @keyup.enter.native="onEnterPassword">
             </el-input>
 
             <template v-if="!isLogin">
@@ -110,7 +110,7 @@
                     return true;
                 }
                 return false;
-            }
+            },
         },
         methods: {
             changeType() {
@@ -126,6 +126,8 @@
                 }).catch(() => {});
             },
             async login() {
+                if(this.isLoginDisable) return;
+
                 let result = await userAPI.login(this.userName, SHA256(this.userPassword).toString());
 
                 if (result && result.data) {
@@ -203,6 +205,11 @@
                     });
                     return;
                 }
+            },
+            onEnterPassword(){
+                if(!this.isLogin) return;
+
+                this.login();
             }
         },
         components: {
@@ -215,10 +222,13 @@
     @import "@/assets/style/variable.scss";
 
     .sign-container {
-        width: 300px;
+        width: 400px;
         position: fixed;
-        top: calc(50% - 150px);
-        left: calc(50% - 150px);
+        top: calc(50% - 250px);
+        left: calc(50% - 200px);
+        padding: 100px 50px;
+        background-color: $bgwhite;
+        border-radius: 4px;
 
         #login-button {
             width: 100%;

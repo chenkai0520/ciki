@@ -31,18 +31,14 @@ async function signIn(ctx, next) {
     }
     let error = ctx.parameter.validate(rule, data);
     if (error) {
-        return ctx.body = {
-            code: code.ILLEGAL_PARAMETER,
-            message: error
-        };
+
+        return ctx.body = ctx.error(code.ILLEGAL_PARAMETER, error);
     }
 
-    let user = await userModel.getUserByName(name);
+    let user = await userModel.getByName(name);
     if (!user) {
-        return ctx.body = {
-            code: code.NOT_EXISTED,
-            message: '用户不存在'
-        };
+
+        return ctx.body = ctx.error(code.NOT_EXISTED, '用户不存在');
     }
 
     let isRightPassword = user.password === SHA256(`${password}${user.salt}`).toString();
@@ -56,24 +52,19 @@ async function signIn(ctx, next) {
 
         ctx.cookies.set('token', 'token', {
             domain: 'localhost',
-            maxAge: 24*3600*1000,
+            maxAge: 24 * 3600 * 1000,
             httpOnly: false,
             path: '/',
-            overwrite: false  // 是否允许重写
+            overwrite: false // 是否允许重写
         });
-        return ctx.body = {
-            code: code.SUCCESS,
-            data: {
-                name,
-                jwt: token,
-            }
-        };
-    }
 
-    return ctx.body = {
-        code: code.ERROR,
-        message: "密码错误"
-    };
+        return ctx.body = ctx.ok(code.SUCCESS, {
+            name,
+            jwt: token,
+        });
+    }
+    
+    return ctx.body = ctx.error(code.ERROR, '密码错误');
 }
 
 
@@ -99,19 +90,15 @@ async function register(ctx, next) {
     }
     let error = ctx.parameter.validate(rule, data);
     if (error) {
-        return ctx.body = {
-            code: code.ILLEGAL_PARAMETER,
-            message: error
-        };
+
+        return ctx.body = ctx.error(code.ILLEGAL_PARAMETER, error);
     }
 
 
     let isExit = await userModel.isExit(name);
     if (isExit) {
-        return ctx.body = {
-            code: code.EXISTED,
-            message: "用户已存在"
-        };
+
+        return ctx.body = ctx.error(code.EXISTED, '用户已存在');
     }
 
 
@@ -119,17 +106,13 @@ async function register(ctx, next) {
     let reault = await userModel.insert(name, SHA256(`${password}${salt}`).toString(), salt);
 
     if (reault && reault.rowCount) {
-        return ctx.body = {
-            code: code.SUCCESS,
-            data: {
-                name
-            }
-        };
+
+        return ctx.body = ctx.ok(code.SUCCESS, {
+            name
+        });
     }
-    return ctx.body = {
-        code: code.UNKNOWN_MISTAKE,
-        message: "未知错误"
-    };
+
+    return ctx.body = ctx.error(code.UNKNOWN_MISTAKE, '未知错误');
 }
 
 module.exports = {

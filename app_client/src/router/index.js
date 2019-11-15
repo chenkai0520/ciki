@@ -5,6 +5,11 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/write',
+        name: 'write',
+        component: Home
+      },
   {
     path: '/',
     name: 'home',

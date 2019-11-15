@@ -1,6 +1,5 @@
 const Koa = require('koa');
 const Router = require('@koa/router');
-const KoaStatic = require('koa-static')
 const bodyParser = require('koa-bodyparser');
 const RequireDirectory = require('require-directory')
 
@@ -16,6 +15,20 @@ const app = new Koa();
 
 app.context.log = log4jser;
 app.context.parameter = new parameter();
+
+app.context.ok = (code,data)=>{
+    return{
+        code,
+        data
+    };
+};
+app.context.error = (code,message)=>{
+    return{
+        code,
+        message
+    };
+}
+
 
 app.on('error', (err, ctx) => {
     ctx.log.error('server error', err, ctx);
@@ -36,7 +49,6 @@ app.use(async (ctx, next) => {
 
 app.use(logger);
 app.use(bodyParser());
-app.use(KoaStatic(__dirname + '/public'));
 
 // 自动注册路由
 RequireDirectory(module, './app/routes', {
@@ -49,5 +61,4 @@ RequireDirectory(module, './app/routes', {
 
 
 app.listen(config.port);
-
 log4jser.info(`应用启动：http://localhost:${config.port}`);

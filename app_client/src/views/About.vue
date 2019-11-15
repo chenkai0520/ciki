@@ -1,16 +1,22 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+    <div class="about">
+        <h1>This is an about page{{user.name}}</h1>
+    </div>
 </template>
 
 <script>
     import {
         user as userAPI
     } from '@/api';
-export default {
-    async created() {
-        await userAPI.shell();
-    },
-}
+    export default {
+        data() {
+            
+            return {
+                user: this.$store.state.user,
+            }
+        },
+        async created() {
+            await userAPI.shell();
+        },
+    }
 </script>

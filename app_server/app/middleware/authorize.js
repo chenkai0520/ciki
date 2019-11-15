@@ -4,6 +4,8 @@ const {
 const {
     code,
 } = require('../utils/config');
+const userModel = require('../model/user');
+
 let authorize = async (ctx, next) => {
 
     let {
@@ -17,19 +19,32 @@ let authorize = async (ctx, next) => {
         let user = await jwtVerify(authorization);
 
         if (!user) {
-            return ctx.body = {
-                code: code.NO_PERMISSION,
-                message: '没有权限'
-            };
+            return ctx.body = ctx.error(code.NO_PERMISSION, '没有权限');
         }
 
+        // 检查user
+        let {
+            name,
+            id
+        } = user;
+        if (!id || !name) {
+            return ctx.body = ctx.error(code.NO_PERMISSION, '没有权限');
+        }
+
+        let userRes = await userModel.getByName(name);
+        if (!userRes || userRes.id !== id) {
+
+            return ctx.body = ctx.error(code.NO_PERMISSION, '没有权限');
+        }
+        ctx.user = {
+            id,
+            name
+        };
         await next();
         return;
     } else {
-        return ctx.body = {
-            code: code.NO_PERMISSION,
-            message: '没有权限'
-        };
+
+        return ctx.body = ctx.error(code.NO_PERMISSION, '没有权限');
     }
 
 }

@@ -1,1 +1,1 @@
-# wiki server
+# ciki server
