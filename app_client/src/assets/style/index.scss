@@ -1,8 +1,9 @@
 @import "./variable.scss";
 
-*{
+* {
     box-sizing: border-box;
 }
+
 html,
 body {
     margin: 0;
@@ -12,10 +13,11 @@ body {
 }
 
 
-.base-shadow{
+.base-shadow {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
-.light-shadow{
+
+.light-shadow {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -23,14 +25,25 @@ body {
 .float-right {
     float: right;
 }
+
 .float-left {
     float: left;
 }
+
 .overflow-ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.select-none{
+
+.select-none {
     user-select: none;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
 }

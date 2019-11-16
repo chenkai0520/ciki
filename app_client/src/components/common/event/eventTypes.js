@@ -1,0 +1,6 @@
+
+
+const SWITCH_SHUNGPING="SWITCH_SHUNGPING"; //切换双屏
+export {
+    SWITCH_SHUNGPING,
+}

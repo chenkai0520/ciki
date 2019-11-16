@@ -1,5 +1,6 @@
 <template>
     <div class="sign-container base-shadow">
+        <logo></logo>
         <form>
             <error-tip :tip="userNameTip" />
             <el-input v-model.trim="userName" placeholder="账号" clearable></el-input>
@@ -30,6 +31,7 @@
 <script>
     import SHA256 from 'crypto-js/sha256';
     import ErrorTip from "@/components/common/error-tip";
+    import Logo from "@/components/logo.vue";
 
     import {
         user as userAPI
@@ -214,6 +216,7 @@
         },
         components: {
             ErrorTip,
+            Logo
         }
     }
 </script>
@@ -226,7 +229,7 @@
         position: fixed;
         top: calc(50% - 250px);
         left: calc(50% - 200px);
-        padding: 100px 50px;
+        padding: 80px 50px;
         background-color: $bgwhite;
         border-radius: 4px;
 

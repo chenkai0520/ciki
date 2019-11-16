@@ -1,16 +1,23 @@
 <template>
-    <div class="writer-container">
-        <writer></writer>
+    <div class="content-wrapper">
+        <main-content></main-content>
     </div>
 </template>
 
 <script>
-    import Writer from '@/components/writer/writer.vue'
+    import Content from '@/components/content/content.vue'
 
     export default {
         name: 'home',
         components: {
-            Writer
+            "main-content":Content
         }
     }
 </script>
+
+<style lang="scss">
+    .content-wrapper{
+        width: 100%;
+        height: calc(100% - 60px);
+    }
+</style>
