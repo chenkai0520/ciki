@@ -39,7 +39,13 @@ module.exports = {
         // 只有entry属性时，直接用字符串表示模块入口
         // client: 'src/modules/client/client.js'
     },
-    devServer:{
+    devServer: {
         port: 5566,
-    }
+    },
+    chainWebpack: (config) => {
+        config.module.rule('worker')
+            .test(/\.worker\.js$/i)
+            .use('worker-loader')
+            .loader('worker-loader');
+    },
 }

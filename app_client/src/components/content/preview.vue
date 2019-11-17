@@ -5,7 +5,11 @@
 </template>
 
 <script>
-    import marked from 'marked'
+    import RenderWorker from './render.worker.js';
+    let renderWorker = new RenderWorker();
+    renderWorker.onmessage = function (e) {
+        document.getElementById('preview-container').innerHTML = e.data;
+    }
 
     export default {
         props: {
@@ -24,17 +28,24 @@
         methods: {
             transform(markdown) {
                 if (!markdown) return;
-                document.getElementById('preview-container').innerHTML = marked(this.markdownText);
+                renderWorker.postMessage([this.markdownText]);
             }
         },
     }
 </script>
 
 <style lang="scss">
-@import "@/assets/style/variable.scss";
+    @import "@/assets/style/variable.scss";
 
-#preview-container{
-    padding: 5px 15px;
-    border-left: 1px solid $bggray;
-}
+    #preview-container {
+        padding: 5px 15px;
+        border-left: 1px solid $bggray;
+        overflow: scroll;
+
+        pre {
+            background-color: $bggray;
+            padding: 12px;
+            overflow: scroll;
+        }
+    }
 </style>

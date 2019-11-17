@@ -14,6 +14,9 @@ import KTextarea from '@/k-ui/textarea'
 import '@/assets/icon/iconfont.js'
 
 import EventHub from '@/components/common/event/eventHub.js'
+
+import 'highlight.js/styles/github.css';
+
 Vue.prototype.$bus = new EventHub();
 
 Vue.use(KTextarea);

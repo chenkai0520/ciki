@@ -1,6 +1,6 @@
 <template>
     <div class="content-container">
-        <writer :style="{width: isShuangPing ? '50%':'100%'}"  :vmodel.sync="markdownText"></writer>
+        <writer :style="{width: isShuangPing ? '50%':'100%'}" :vmodel.sync="markdownText"></writer>
         <preview v-show="isShuangPing" :style="{width:'50%'}" :markdownText="markdownText"></preview>
     </div>
 </template>
@@ -8,27 +8,24 @@
 <script>
     import Writer from '@/components/content/writer.vue'
     import Preview from '@/components/content/preview.vue'
-    import {SWITCH_SHUNGPING} from '@/components/common/event/eventTypes.js'
+    import {
+        SWITCH_SHUNGPING
+    } from '@/components/common/event/eventTypes.js'
 
     export default {
         name: 'home',
         data() {
             return {
-                markdownText: "# hello world",
+                markdownText: `# hello world
+![](http://img0.bdstatic.com/static/searchresult/img/logo-2X_32a8193.png)
+`,
                 isShuangPing: true
             }
         },
         created() {
-            let VM = this;
-            this.$bus.$on(SWITCH_SHUNGPING,(val)=>{
-                console.log(`val`,val);
+            this.$bus.$on(SWITCH_SHUNGPING, (val) => {
                 this.isShuangPing = !this.isShuangPing;
             });
-        },
-        watch: {
-            isShuangPing(val){
-                console.log(`val`,val)
-            }
         },
         components: {
             Writer,
@@ -40,7 +37,7 @@
 <style lang="scss">
     @import "@/assets/style/variable.scss";
 
-    .content-container{
+    .content-container {
         width: 100%;
         height: 100%;
         display: flex;

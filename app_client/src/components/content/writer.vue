@@ -33,7 +33,7 @@
     .edit-container {
         .input-container {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 30px);
 
             textarea {
                 width: 100%;

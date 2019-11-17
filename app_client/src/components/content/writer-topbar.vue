@@ -1,5 +1,5 @@
 <template>
-    <div class="writer-topbar" @click="handlerFun('shuangping')">
+    <div class="writer-topbar">
         <span class="svg-wrapper" v-for="icon in icons" :key="icon" @click.native="handlerFun(icon)">
             <svg :title="icon" class="icon select-none" aria-hidden="true">
                 <use :[xhref]="comXhref(icon)"></use>
@@ -17,7 +17,7 @@
         data() {
             return {
                 xhref: 'xlink:href',
-                icons: ['shuangping']
+                icons: ['lishijilu', 'shuangping', 'bangzhu', 'baocun']
             }
         },
         methods: {
@@ -25,8 +25,6 @@
                 return `#icon${icon}`;
             },
             handlerFun(type) {
-                console.log(`type:`, type)
-
                 switch (type) {
                     case 'shuangping':
                         this.shuangpingFun();
@@ -36,7 +34,6 @@
                 }
             },
             shuangpingFun() {
-                console.log(SWITCH_SHUNGPING)
                 this.$bus.$emit(SWITCH_SHUNGPING);
             }
         },
@@ -51,16 +48,18 @@
         float: right;
         color: $gray;
         cursor: pointer;
-
+        height: 30px;
 
 
 
         .svg-wrapper {
             display: inline-block;
             height: 100%;
-            padding: 6px 12px;
+            padding: 8px;
+
             &:hover {
                 color: $primary;
+                background-color: $bgwhite;
             }
         }
     }
