@@ -2,6 +2,7 @@
 
 * {
     box-sizing: border-box;
+    background-color: $bgwhite;
 }
 
 html,
@@ -46,4 +47,8 @@ body {
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
+}
+
+.span-svg-wrapper{
+    padding: 6px;
 }

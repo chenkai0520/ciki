@@ -15,7 +15,6 @@ marked.setOptions({
     xhtml: false,
 });
 
-
 onmessage = function (e) {
     postMessage(marked(e.data[0]));
 }

@@ -1,12 +1,11 @@
 <template>
     <div id="preview-container">
-        {{markdownText}}
     </div>
 </template>
 
 <script>
-    import RenderWorker from './render.worker.js';
-    let renderWorker = new RenderWorker();
+    import Worker from './render.worker.js';
+    let renderWorker = new Worker();
     renderWorker.onmessage = function (e) {
         document.getElementById('preview-container').innerHTML = e.data;
     }
@@ -15,6 +14,7 @@
         props: {
             markdownText: {
                 type: String,
+                renderTimeOut: null,
             }
         },
         mounted() {
@@ -27,7 +27,6 @@
         },
         methods: {
             transform(markdown) {
-                if (!markdown) return;
                 renderWorker.postMessage([this.markdownText]);
             }
         },

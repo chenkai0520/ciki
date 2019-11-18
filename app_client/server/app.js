@@ -2,7 +2,7 @@ const Koa = require('koa')
 const serve = require('koa-static');
 
 const logger = require('./app/middleware/logger');
-const authorize = require('./app/middleware/authorize');
+// const authorize = require('./app/middleware/authorize');
 
 const {log4jser} = require('./app/utils/log4js')
 const {
@@ -17,7 +17,7 @@ app.on('error', (err, ctx) => {
 
 // 日志
 app.use(logger);
-app.use(authorize);
+// app.use(authorize);
 
 
 // 静态文件服务

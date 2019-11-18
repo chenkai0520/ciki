@@ -1,6 +1,6 @@
 <template>
     <div class="content-container">
-        <writer :style="{width: isShuangPing ? '50%':'100%'}" :vmodel.sync="markdownText"></writer>
+        <writer :style="{width: isShuangPing ? '50%':'100%'}" :vmodel.sync="markdownText" :isShuangPing="isShuangPing"></writer>
         <preview v-show="isShuangPing" :style="{width:'50%'}" :markdownText="markdownText"></preview>
     </div>
 </template>
@@ -9,7 +9,7 @@
     import Writer from '@/components/content/writer.vue'
     import Preview from '@/components/content/preview.vue'
     import {
-        SWITCH_SHUNGPING
+        SWITCH_SHUNGPING,DOWNLOAD_MARKDOWN
     } from '@/components/common/event/eventTypes.js'
 
     export default {
@@ -23,6 +23,7 @@
             }
         },
         created() {
+            this.$bus.$off(SWITCH_SHUNGPING);
             this.$bus.$on(SWITCH_SHUNGPING, (val) => {
                 this.isShuangPing = !this.isShuangPing;
             });
