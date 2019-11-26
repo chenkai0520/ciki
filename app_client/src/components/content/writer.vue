@@ -2,15 +2,20 @@
     <div class="edit-container">
         <!-- topbar功能条 -->
         <div class="writer-topbar">
-            <template v-for="(icon,index) in icons">
-                <span v-if="icon !== '|'" :key="index" class="svg-wrapper" @click="handlerFun(icon)">
-                    <svg :title="icon" class="icon select-none" aria-hidden="true">
-                        <use :[xhref]="comXhref(icon)"> </use>
-                    </svg>
-                </span>
-                <div v-else :key="index" class="split"></div>
-            </template>
-            <fullscreen class="fullscreen-wrapper" :fdom="fullscreenDom"></fullscreen>
+            <div class="topbar-left-wrapper">
+                <el-input v-model="blogTitle" class="title-input-wrapper" placeholder="请输入标题" size="mini" clearable></el-input>
+            </div>
+            <div class="topbar-right-wrapper">
+                <template v-for="(icon,index) in icons">
+                    <span v-if="icon !== '|'" :key="index" class="svg-wrapper" @click="handlerFun(icon)">
+                        <svg :title="icon" class="icon select-none" aria-hidden="true">
+                            <use :[xhref]="comXhref(icon)"> </use>
+                        </svg>
+                    </span>
+                    <div v-else :key="index" class="split"></div>
+                </template>
+                <fullscreen class="fullscreen-wrapper" :fdom="fullscreenDom"></fullscreen>
+            </div>
         </div>
 
         <!-- 编辑器  -->
@@ -27,14 +32,19 @@
 </template>
 
 <script>
-    import event from '@/components/common/event/eventHub.js'
+    import event from '@/event/eventHub.js'
     import fullscreen from '@/components/common/fullscreen.vue'
     import {
-        downloadText,toggleFullScreen
+        downloadText,
+        toggleFullScreen
     } from '@/utils/utils.js'
     import {
-        SWITCH_SHUNGPING,
-    } from '@/components/common/event/eventTypes.js'
+        SWITCH_SHUNGPING,PUBLISH_BLOG
+    } from '@/event/eventTypes.js'
+
+    import {
+        blog as blogAPI
+    } from '@/api';
     export default {
         props: {
             isShuangPing: {
@@ -44,20 +54,27 @@
         },
         data() {
             const editConfig = {
-                biaogecopy: this.getTableMarkdown(3,3),
+                biaogecopy: this.getTableMarkdown(3, 3),
                 daimakuai: "\n```\n\n```"
             }
             return {
                 fullscreenDom: null,
                 editConfig: editConfig,
                 markdownText: this.$attrs.vmodel,
+                blogTitle: null,
                 bgcolor: "#EBEEF5",
                 xhref: 'xlink:href',
-                icons: ['biaogecopy', 'daimakuai', '|', 'xiazai', 'lishijilu', 'shuangping', 'baocun','|']
+                icons: ['biaogecopy', 'daimakuai', '|', 'xiazai', 'lishijilu', 'shuangping', 'baocun']
             }
         },
+        created() {
+            this.$bus.$off(PUBLISH_BLOG);
+            this.$bus.$on(PUBLISH_BLOG, (val) => {
+                this.publishBlog();
+            });
+        },
         mounted() {
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
                 this.fullscreenDom = document.querySelector('.content-wrapper');
             });
         },
@@ -78,6 +95,9 @@
                         if (type in this.editConfig) {
                             this.editMarkdownFun(this.editConfig[type]);
                         }
+                        break;
+                    case 'baocun':
+                        this.baocunFun();
                         break;
                     default:
                         break;
@@ -112,7 +132,22 @@
                     tableContent += tableBase;
                 }
 
-                return "\n"+tableBase + tableLine + tableContent;
+                return "\n" + tableBase + tableLine + tableContent;
+            },
+            async baocunFun() {
+                if(!this.blogTitle){
+                    this.$message({
+                        message: '请输入标题',
+                        type: 'error'
+                    });
+                    return;
+                }
+                let result = await blogAPI.create(this.markdownText, this.blogTitle, 'tag');
+                console.log(result);
+            },
+            async publishBlog(){
+                let result = await blogAPI.publish(this.markdownText, this.blogTitle, 'tag');
+                console.log(result);
             }
         },
         watch: {
@@ -120,7 +155,7 @@
                 this.$emit('update:vmodel', val);
             }
         },
-        components:{
+        components: {
             fullscreen: fullscreen
         }
     }
@@ -162,26 +197,45 @@
             color: $gray;
             height: 30px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
 
-            .split {
-                border-left: 1px solid $black;
-                margin: 4px;
-            }
-
-            .svg-wrapper {
-                display: inline-block;
-                height: 100%;
-                padding: 8px;
-                cursor: pointer;
-
-                svg {
-                    &:hover {
-                        color: $primary;
-                        background-color: $bgwhite;
+            .topbar-left-wrapper {
+                overflow: scroll;
+                .title-input-wrapper {
+                    width: 140px;
+                    input {
+                        border: 0;
+                        border-radius: 0;
+                    }
+                    &:hover{
+                        input {
+                            border-bottom: 1px solid $primary;;
+                        }  
                     }
                 }
+            }
 
+
+            .topbar-right-wrapper {
+                display: flex;
+                overflow: scroll;
+                .split {
+                    border-left: 1px solid $black;
+                    margin: 4px;
+                }
+
+                .svg-wrapper {
+                    display: inline-block;
+                    height: 100%;
+                    padding: 8px;
+                    cursor: pointer;
+                    svg {
+                        &:hover {
+                            color: $primary;
+                            background-color: $bgwhite;
+                        }
+                    }
+                }
             }
         }
     }

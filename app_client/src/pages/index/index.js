@@ -5,22 +5,16 @@ import store from '../../store'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import '@/assets/style/index.scss'
 
-// import KUI from './k-ui'
-// Vue.use(KUI);
-import KTextarea from '@/k-ui/textarea'
+import EventHub from '@/event/eventHub.js'
 
 import '@/assets/icon/iconfont.js'
-
-import EventHub from '@/components/common/event/eventHub.js'
-
 import 'highlight.js/styles/github.css';
+import '@/assets/style/index.scss'
+
+
 
 Vue.prototype.$bus = new EventHub();
-
-Vue.use(KTextarea);
-
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false

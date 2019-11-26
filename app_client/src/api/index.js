@@ -26,7 +26,8 @@ axios.interceptors.response.use(function (response) {
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwt');
 
 const baseUrl = {
-    auth: 'http://localhost:3000/auth'
+    auth: 'http://localhost:3000/auth',
+    blog: 'http://localhost:3000/blog',
 }
 
 
@@ -53,6 +54,34 @@ const user = {
     }
 }
 
+const blog = {
+    create(content,title,tag){
+
+        if(!content || !tag || !title) return;
+        let params = {
+            content,tag,title
+        }
+        return axios.post(`${baseUrl.blog}/`, qs.stringify(params));
+    },
+    update(content,title,tag){
+
+        if(!content || !tag || !title) return;
+        let params = {
+            content,tag,title
+        }
+        return axios.put(`${baseUrl.blog}/`, qs.stringify(params));
+    },
+    publish(content,title,tag){
+
+        if(!content || !tag || !title) return;
+        let params = {
+            content,tag,title
+        }
+        return axios.post(`${baseUrl.blog}/`, qs.stringify(params));
+    }
+}
+
 export {
-    user
+    user,
+    blog
 }

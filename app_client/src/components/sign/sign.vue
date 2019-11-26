@@ -31,7 +31,7 @@
 <script>
     import SHA256 from 'crypto-js/sha256';
     import ErrorTip from "@/components/common/error-tip";
-    import Logo from "@/components/logo.vue";
+    import Logo from "@/components/common/logo.vue";
 
     import {
         user as userAPI

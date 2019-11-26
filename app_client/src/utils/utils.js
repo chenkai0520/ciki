@@ -31,8 +31,25 @@ function toggleFullScreen(dom = document.documentElement) {
     }
 }
 
+
+
+let debounceTimer;
+/**
+ * 
+ * @param {function} fun 
+ * @param {number} delay 
+ */
+function debounce(fun,delay) {
+    return (...args)=>{
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            fun.apply(null,args)
+        }, delay);
+    }
+}
 export {
     setCookie,
     downloadText,
-    toggleFullScreen
+    toggleFullScreen,
+    debounce
 }

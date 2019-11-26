@@ -1,6 +1,6 @@
 <template>
     <div class="about">
-        <h1>This is an about page{{user.name}}</h1>
+        <h1>markdown 编辑器</h1>
     </div>
 </template>
 

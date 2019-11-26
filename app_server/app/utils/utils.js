@@ -23,6 +23,22 @@ function getRandomStr(len = 16) {
     return randomStr;
 }
 
+/**
+ * 生成指定长度的随机字符串(小写字母、数字)
+ * @param {number} len default:32; 生成字符串的长度 
+ * @returns {string} 随机字符串
+ */
+function getUUID(len = 32) {
+    let datas = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    let datasLength = datas.length;
+
+    let randomStr = '';
+    for (let index = 0; index < len; index++) {
+        randomStr += datas[getRandomNum(0, datasLength - 1)];
+    }
+    return randomStr;
+}
+
 
 /**
  * 生成指定区间的，指定有效数字的随机数
@@ -68,6 +84,7 @@ async function jwtVerify(token, salt = SALT) {
     })
 }
 module.exports = {
+    getUUID,
     getRandomStr,
     getRandomNum,
     jwtSign,

@@ -1,0 +1,8 @@
+
+
+const SWITCH_SHUNGPING="SWITCH_SHUNGPING"; //切换双屏
+const PUBLISH_BLOG="PUBLISH_BLOG"; //发布文章
+export {
+    SWITCH_SHUNGPING,
+    PUBLISH_BLOG
+}

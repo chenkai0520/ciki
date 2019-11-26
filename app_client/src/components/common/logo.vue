@@ -9,7 +9,8 @@
 .logo-container{
     font-weight: 900;
     font-size: 48px;
-    display: inline-block;
     color: $primary;
+    display: flex;
+    align-items: center;
 }
 </style>

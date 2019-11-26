@@ -9,16 +9,15 @@
     import Writer from '@/components/content/writer.vue'
     import Preview from '@/components/content/preview.vue'
     import {
-        SWITCH_SHUNGPING,DOWNLOAD_MARKDOWN
-    } from '@/components/common/event/eventTypes.js'
+        SWITCH_SHUNGPING
+    } from '@/event/eventTypes.js'
 
     export default {
-        name: 'home',
+        name: 'editor-content',
         data() {
+            let tt= this.$route.name;
             return {
-                markdownText: `# hello world
-![](http://img0.bdstatic.com/static/searchresult/img/logo-2X_32a8193.png)
-`,
+                markdownText: `# hello world ${tt}`,
                 isShuangPing: true
             }
         },
@@ -43,7 +42,7 @@
         height: 100%;
         display: flex;
         border-left: 1px solid $bggray;
-        border-right: 1px solid $bggray;
         border-bottom: 1px solid $bggray;
+        border-right: 1px solid $bggray;
     }
 </style>

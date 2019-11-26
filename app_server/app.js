@@ -59,6 +59,5 @@ RequireDirectory(module, './app/routes', {
     }
 });
 
-
 app.listen(config.port);
 log4jser.info(`应用启动：http://localhost:${config.port}`);
