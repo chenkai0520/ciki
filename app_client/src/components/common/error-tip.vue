@@ -16,8 +16,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .tip-wrapper{
         height: 24px;
         .tip-container {

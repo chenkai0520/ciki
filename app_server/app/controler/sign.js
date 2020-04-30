@@ -5,12 +5,11 @@ const {
     jwtSign
 } = require('../utils/utils');
 const {
-    code,
-    reg,
-} = require('../utils/config');
+    REGEXP,
+} = require('../utils/constants');
 const userModel = require('../model/user');
 
-async function signIn(ctx, next) {
+async function signIn(ctx) {
     let {
         name,
         password
@@ -19,7 +18,7 @@ async function signIn(ctx, next) {
     let rule = {
         name: {
             type: 'string',
-            format: reg.userNameR
+            format: REGEXP.USER_NAME
         },
         password: {
             type: 'string',
@@ -32,13 +31,13 @@ async function signIn(ctx, next) {
     let error = ctx.parameter.validate(rule, data);
     if (error) {
 
-        return ctx.body = ctx.error(code.ILLEGAL_PARAMETER, error);
+        return ctx.error(ctx.ERR.ILLEGAL_PARAMS, error);
     }
 
     let user = await userModel.getByName(name);
     if (!user) {
 
-        return ctx.body = ctx.error(code.NOT_EXISTED, '用户不存在');
+        return ctx.error(ctx.ERR.NOT_EXIST);
     }
 
     let isRightPassword = user.password === SHA256(`${password}${user.salt}`).toString();
@@ -58,18 +57,18 @@ async function signIn(ctx, next) {
             overwrite: false // 是否允许重写
         });
 
-        return ctx.body = ctx.ok(code.SUCCESS, {
+        return ctx.success({
             name,
             jwt: token,
         });
     }
     
-    return ctx.body = ctx.error(code.ERROR, '密码错误');
+    return ctx.error(ctx.ERR.ERROR, '密码错误');
 }
 
 
 
-async function register(ctx, next) {
+async function register(ctx) {
     let {
         name,
         password
@@ -78,7 +77,7 @@ async function register(ctx, next) {
     let rule = {
         name: {
             type: 'string',
-            format: reg.userNameR
+            format: REGEXP.USER_NAME
         },
         password: {
             type: 'string',
@@ -91,14 +90,14 @@ async function register(ctx, next) {
     let error = ctx.parameter.validate(rule, data);
     if (error) {
 
-        return ctx.body = ctx.error(code.ILLEGAL_PARAMETER, error);
+        return ctx.error(ctx.ERR.ILLEGAL_PARAMS, error);
     }
 
 
     let isExit = await userModel.isExit(name);
     if (isExit) {
 
-        return ctx.body = ctx.error(code.EXISTED, '用户已存在');
+        return ctx.error(ctx.ERR.EXISTED);
     }
 
 
@@ -107,12 +106,12 @@ async function register(ctx, next) {
 
     if (reault && reault.rowCount) {
 
-        return ctx.body = ctx.ok(code.SUCCESS, {
+        return ctx.success({
             name
         });
     }
 
-    return ctx.body = ctx.error(code.UNKNOWN_MISTAKE, '未知错误');
+    return ctx.error(ctx.ERR.UNKNOWN_MISTAKE);
 }
 
 module.exports = {

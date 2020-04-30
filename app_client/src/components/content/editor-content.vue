@@ -35,8 +35,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .content-container {
         width: 100%;
         height: 100%;

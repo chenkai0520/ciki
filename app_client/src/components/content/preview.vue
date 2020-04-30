@@ -34,8 +34,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     #preview-container {
         padding: 5px 15px;
         border-left: 1px solid $bggray;

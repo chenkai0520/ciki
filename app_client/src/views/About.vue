@@ -10,13 +10,12 @@
     } from '@/api';
     export default {
         data() {
-            
             return {
                 user: this.$store.state.user,
             }
         },
         async created() {
-            await userAPI.shell();
+            // await userAPI.info();
         },
     }
 </script>

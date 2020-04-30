@@ -95,8 +95,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .topbar-container-wrapper {
         display: flex;
         justify-content: center;

@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
+// let nodejieba = require("nodejieba");
 
 const {log4jser} = require('./log4js')
 const {
     SIGNIN_MAXAGE,
     SALT
-} = require('../utils/config');
-
+} = require('../utils/constants');
 
 /**
  * 生成指定长度的随机字符串
@@ -83,10 +83,38 @@ async function jwtVerify(token, salt = SALT) {
         });
     })
 }
+
+/**
+ * 提取字符串中的中文并分词
+ * @param {string} str 
+ * @returns {array}
+ */
+function extractChinese(str){
+    if(!str || typeof str !== 'string') return [];
+
+    let chinese = str.match(/[\u4e00-\u9fa5]/g);
+    
+    return chinese ? nodejieba.cut(chinese.join('')) : [];
+}
+
+/**
+ * 对字符串中的字母、数字分词
+ * @param {string} str 
+ * @returns {array}
+ */
+function extractEnglish(str){
+    if(!str || typeof str !== 'string') return [];
+
+    return str.split(/[^a-zA-Z0-9]/).filter((val)=>{ return !!val });
+}
+
+
 module.exports = {
     getUUID,
     getRandomStr,
     getRandomNum,
     jwtSign,
-    jwtVerify
+    jwtVerify,
+    extractChinese,
+    extractEnglish
 }

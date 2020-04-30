@@ -5,7 +5,7 @@ const authorize = require('../middleware/authorize')
 
 const router = new Router()
 
-router.get('/shell', authorize, async (ctx, next) => {
+router.get('/shell', authorize, async (ctx) => {
     let {
         data
     } = ctx.request.query;
@@ -14,7 +14,7 @@ router.get('/shell', authorize, async (ctx, next) => {
     }
     let result = await exec.run(data);
 
-    ctx.body = result;
+    ctx.success(result);
 });
 
 module.exports = router

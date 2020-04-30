@@ -2,7 +2,10 @@ const db = require('../db')
 const {
     getUUID
 } = require('../utils/utils');
-const USER_TABLE = 'public.user';
+const {
+    participleMD
+} = require('../utils/utilsEx');
+
 const USER_DATA_TABLE = 'public.user_data';
 
 let create = async function (userID, blog, short, thumb) {
@@ -23,14 +26,15 @@ let create = async function (userID, blog, short, thumb) {
             sql: `CREATE TABLE data.b_${uid}
             (
                 data text,
-                update_at timestamp without time zone default now()
+                update_at timestamp without time zone default now(),
+                fts tsvector
             )`,
         },
         {
             sql: `INSERT INTO data.b_${uid}(
-                data)
-                VALUES ($1);`,
-            params: [content]
+                data,fts)
+                VALUES ($1, array_to_tsvector($2));`,
+            params: [content,participleMD(content)]
         }
     ]
 

@@ -13,8 +13,6 @@
     }
 </script>
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     #app {
         padding: 0;
         margin: 0;

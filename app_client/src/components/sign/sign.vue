@@ -184,6 +184,8 @@
                                 type: 'success'
                             });
                             localStorage.setItem('name', this.userName);
+
+                            this.changeType();
                             break;
                         case 502:
                             this.$message({
@@ -198,6 +200,10 @@
                             });
                             break;
                         default:
+                            this.$message({
+                                message: result.data.message,
+                                type: 'error'
+                            });
                             break;
                     }
                 } else {
@@ -222,8 +228,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .sign-container {
         width: 400px;
         position: fixed;

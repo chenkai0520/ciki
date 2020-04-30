@@ -16,8 +16,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .content-wrapper{
         width: 100%;
         height: calc(100% - 60px);

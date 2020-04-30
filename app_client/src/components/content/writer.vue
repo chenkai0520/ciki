@@ -3,7 +3,7 @@
         <!-- topbar功能条 -->
         <div class="writer-topbar">
             <div class="topbar-left-wrapper">
-                <el-input v-model="blogTitle" class="title-input-wrapper" placeholder="请输入标题" size="mini" clearable></el-input>
+                <el-input v-model.trim="blogTitle" class="title-input-wrapper" placeholder="请输入标题" size="mini" clearable></el-input>
             </div>
             <div class="topbar-right-wrapper">
                 <template v-for="(icon,index) in icons">
@@ -66,6 +66,9 @@
                 xhref: 'xlink:href',
                 icons: ['biaogecopy', 'daimakuai', '|', 'xiazai', 'lishijilu', 'shuangping', 'baocun']
             }
+        },
+        updated() {
+            console.log('updated');
         },
         created() {
             this.$bus.$off(PUBLISH_BLOG);
@@ -162,8 +165,6 @@
 </script>
 
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .edit-container {
         .input-container {
             width: 100%;
@@ -202,7 +203,9 @@
             .topbar-left-wrapper {
                 overflow: scroll;
                 .title-input-wrapper {
-                    width: 140px;
+                    width: 200px;
+                    font-size: 16px;
+                    font-weight: bolder;
                     input {
                         border: 0;
                         border-radius: 0;

@@ -1,20 +1,17 @@
-const {
-    code,
-} = require('../utils/config');
 const userModel = require('../model/user');
 
-async function info(ctx, next) {
+async function info(ctx) {
 
     if (!ctx.user || !ctx.user.name) {
-        return ctx.body = ctx.error(code.NOT_EXISTED, '用户不存在');
+        return ctx.error(ctx.ERR.NOT_EXIST);
     }
 
     let result = await userModel.getByName(ctx.user.name);
     if (!result) {
-        return ctx.body = ctx.error(code.NOT_EXISTED, '用户不存在');
+        return ctx.error(ctx.ERR.NOT_EXIST);
     }
 
-    return ctx.body = ctx.ok(code.SUCCESS, {
+    return ctx.success({
         id: result.id,
         name: result.name,
         avatar: result.avatar,

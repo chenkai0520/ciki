@@ -31,7 +31,6 @@
     }
 </script>
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
     .icon-container {
         display: flex;
         align-items: center;

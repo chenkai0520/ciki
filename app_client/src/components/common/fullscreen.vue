@@ -50,8 +50,6 @@
     }
 </script>
 <style lang="scss">
-    @import "@/assets/style/variable.scss";
-
     .fullscreen-content {
         padding: 8px;
         font-size: 16px;

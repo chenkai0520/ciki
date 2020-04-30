@@ -23,10 +23,12 @@ axios.interceptors.response.use(function (response) {
     console.log(error);
     return null;
 });
+
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwt');
 
 const baseUrl = {
     auth: 'http://localhost:3000/auth',
+    user: 'http://localhost:3000/user',
     blog: 'http://localhost:3000/blog',
 }
 
@@ -46,11 +48,9 @@ const user = {
         }
         return axios.post(`${baseUrl.auth}/login`, qs.stringify(params));
     },
-    shell(){
-        return axios.get(`http://localhost:3000/shell?data=ls`);
-    },
-    info(){
-        return axios.get(`http://localhost:3000/user/info`);
+    
+    info() {
+        return axios.get(`${baseUrl.user}/info`);
     }
 }
 
